@@ -1,1 +1,1 @@
-# Smart Grid Load Balancing API Project
+Ambient Clinical Scribe SOAP Note Generator

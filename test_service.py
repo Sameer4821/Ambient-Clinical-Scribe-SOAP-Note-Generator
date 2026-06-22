@@ -1,5 +1,5 @@
 # pyrefly: ignore [missing-import]
-from app.services.schemas.soap_service import SOAPService
+from app.services.soap_service import SOAPService
 
 transcript = """
 Patient: I have fever since 3 days.

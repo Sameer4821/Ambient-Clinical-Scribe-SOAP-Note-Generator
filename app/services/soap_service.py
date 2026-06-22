@@ -1,5 +1,6 @@
 from app.services.schemas.soap_schema import SOAPNote
-
+import os
+import json
 
 class SOAPService:
 

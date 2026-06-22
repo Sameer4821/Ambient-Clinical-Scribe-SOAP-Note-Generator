@@ -4,7 +4,7 @@ Identifies and separates different speakers in audio files.
 Uses pyannote.audio for speaker diarization.
 """
 
-from pyannote.audio import Pipeline
+from pyannote.audio import Pipeline # pyrefly: ignore [missing-import]
 
 
 def get_diarization(audio_path: str):

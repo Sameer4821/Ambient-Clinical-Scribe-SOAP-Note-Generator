@@ -2,3 +2,21 @@ __pycache__/
 venv/
 .env
 *.pyc
+# Python
+__pycache__/
+*.py[cod]
+
+# Virtual Environment
+venv/
+
+# Uploaded files
+uploads/*.wav
+uploads/*.mp3
+uploads/*.m4a
+
+# Environment Variables
+.env
+
+# IDE
+.vscode/
+.idea/

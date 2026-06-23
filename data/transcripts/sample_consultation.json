@@ -1,0 +1,14 @@
+{
+  "filename": "sample_consultation.mp3",
+  "language": "en",
+  "transcript": [
+    {
+      "speaker": "Doctor",
+      "text": "Good morning. I'm Dr. Smith. How are you feeling today?"
+    },
+    {
+      "speaker": "Patient",
+      "text": "Hi doctor. I've been having some chest pain for about a week now."
+    }
+  ]
+}

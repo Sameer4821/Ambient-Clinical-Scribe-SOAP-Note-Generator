@@ -29,14 +29,27 @@ class SOAPService:
             f"Transcript:\n{transcript}"
         )
 
-        response = client.models.generate_content(
-            model="gemini-2.5-flash",
-            contents=prompt,
-            config=types.GenerateContentConfig(
-                response_mime_type="application/json",
-                response_schema=SOAPNote,
-            ),
-        )
+        from google.genai import errors
+        import time
+
+        max_retries = 5
+        backoff = 2
+        for attempt in range(max_retries):
+            try:
+                response = client.models.generate_content(
+                    model="gemini-2.5-flash",
+                    contents=prompt,
+                    config=types.GenerateContentConfig(
+                        response_mime_type="application/json",
+                        response_schema=SOAPNote,
+                    ),
+                )
+                break
+            except errors.APIError as e:
+                if e.code in (429, 503) and attempt < max_retries - 1:
+                    time.sleep(backoff ** (attempt + 1))
+                    continue
+                raise
 
         # Parse the structured response into the SOAPNote model
         return SOAPNote.model_validate_json(response.text)

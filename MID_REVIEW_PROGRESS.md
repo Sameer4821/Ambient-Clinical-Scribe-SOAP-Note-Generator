@@ -115,7 +115,6 @@ The backend implementation was thoroughly verified using mock data and local sim
 3. **Database Integration:**
    - Persist generated SOAP notes and metadata to a database (e.g., PostgreSQL or SQLite) for history and retrieval.
 
----
 
 ## 🎤 Presentation Slide Guide (Talking Points)
 

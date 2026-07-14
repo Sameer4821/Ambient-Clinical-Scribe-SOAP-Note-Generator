@@ -5,6 +5,11 @@ Demonstrates the complete processing pipeline.
 
 import json
 from pathlib import Path
+import sys
+import io
+
+# Force UTF-8 encoding for stdout to prevent UnicodeEncodeError on Windows console
+sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 
 # Test data - simulate Whisper output with segments
 def simulate_whisper_output():
@@ -90,9 +95,9 @@ def map_segments_to_speakers(segments, diarization_timeline):
         # First time seeing this speaker, assign label
         if speaker and speaker not in speaker_labels:
             if speaker_counter == 0:
-                speaker_labels[speaker] = "Doctor"
+                speaker_labels[speaker] = "Speaker 1: Doctor"
             else:
-                speaker_labels[speaker] = "Patient"
+                speaker_labels[speaker] = "Speaker 2: Patient"
             speaker_counter += 1
         
         # Add speaker label to segment
@@ -253,8 +258,8 @@ def test_pipeline():
     print(f"   → Saved to: data/transcripts/sample_consultation.json")
     print()
     print("✅ 5. Speaker Diarization (Doctor/Patient Separation)")
-    print(f"   → Doctor segments: {len([s for s in formatted_transcript if s['speaker'] == 'Doctor'])}")
-    print(f"   → Patient segments: {len([s for s in formatted_transcript if s['speaker'] == 'Patient'])}")
+    print(f"   → Doctor segments: {len([s for s in formatted_transcript if s['speaker'] == 'Speaker 1: Doctor'])}")
+    print(f"   → Patient segments: {len([s for s in formatted_transcript if s['speaker'] == 'Speaker 2: Patient'])}")
     print()
     print("Speaker Separation Results:")
     for idx, block in enumerate(formatted_transcript, 1):

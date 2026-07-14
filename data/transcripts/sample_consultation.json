@@ -3,12 +3,20 @@
   "language": "en",
   "transcript": [
     {
-      "speaker": "Doctor",
+      "speaker": "Speaker 1: Doctor",
       "text": "Good morning. I'm Dr. Smith. How are you feeling today?"
     },
     {
-      "speaker": "Patient",
+      "speaker": "Speaker 2: Patient",
       "text": "Hi doctor. I've been having some chest pain for about a week now."
     }
-  ]
+  ],
+  "soap_note": {
+    "subjective": "Patient reports chest pain for about a week.",
+    "objective": "No objective information provided in the transcript.",
+    "assessment": "No assessment or diagnosis provided in the transcript.",
+    "plan": "No plan or follow-up instructions provided in the transcript."
+  },
+  "database_saved": false,
+  "database_error": "{'message': \"Could not find the table 'public.consultations' in the schema cache\", 'code': 'PGRST205', 'hint': None, 'details': None}"
 }

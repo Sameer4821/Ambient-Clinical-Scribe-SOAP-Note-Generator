@@ -1,50 +1,59 @@
-from fastapi import APIRouter, UploadFile, File, HTTPException
-from app.modules.transcriber import transcribe_audio
+import os
+import shutil
+import uuid
 
-from app.modules.audio_handler import (
-    is_valid_audio_file,
-    save_audio_file
-)
+from fastapi import APIRouter
+from fastapi import Depends
+from fastapi import File
+from fastapi import HTTPException
+from fastapi import UploadFile
+from sqlalchemy.orm import Session
+
+from app.database.session import get_db
+from app.models.audio import Audio
 
 router = APIRouter(prefix="/audio", tags=["Audio"])
 
+UPLOAD_FOLDER = "uploads"
 
-@router.get("/")
-def audio_status():
-    return {"message": "Audio service ready"}
+os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
 
 @router.post("/upload")
-async def upload_audio(file: UploadFile = File(...)):
+async def upload_audio(
+    file: UploadFile = File(...),
+    db: Session = Depends(get_db),
+):
 
-    if not is_valid_audio_file(file.filename):
+    if not file.filename.endswith((".mp3", ".wav", ".m4a")):
         raise HTTPException(
             status_code=400,
-            detail="Only wav, mp3 and m4a files are allowed"
+            detail="Unsupported audio format.",
         )
 
-    file_path = save_audio_file(file)
+    extension = file.filename.split(".")[-1]
+
+    unique_name = f"{uuid.uuid4()}.{extension}"
+
+    save_path = os.path.join(
+        UPLOAD_FOLDER,
+        unique_name,
+    )
+
+    with open(save_path, "wb") as buffer:
+        shutil.copyfileobj(file.file, buffer)
+
+    audio = Audio(
+        filename=file.filename,
+        path=save_path,
+    )
+
+    db.add(audio)
+    db.commit()
+    db.refresh(audio)
 
     return {
-        "message": "File uploaded successfully",
-        "filename": file.filename,
-        "path": file_path
-    }
-
-@router.post("/transcribe")
-async def transcribe_uploaded_audio(file: UploadFile = File(...)):
-
-    if not is_valid_audio_file(file.filename):
-        raise HTTPException(
-            status_code=400,
-            detail="Only wav, mp3 and m4a files are allowed"
-        )
-
-    file_path = save_audio_file(file)
-
-    transcript = transcribe_audio(file_path)
-
-    return {
-        "filename": file.filename,
-        "transcript": transcript
+        "audio_id": str(audio.id),
+        "filename": audio.filename,
+        "status": audio.status,
     }

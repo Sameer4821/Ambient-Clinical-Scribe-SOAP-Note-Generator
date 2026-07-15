@@ -101,16 +101,16 @@ class ICDRecommender:
                 reverse=True,
             )
 
-            for score, code, desc in scores[:5]:
+            score, code, desc = scores[0]
 
-                recommendations.append(
-                    {
-                        "diagnosis": diagnosis,
-                        "code": code,
-                        "description": desc,
-                        "confidence": int(score),
-                    }
-                )
+            recommendations.append(
+                {
+                    "diagnosis": diagnosis,
+                    "code": code,
+                    "description": desc,
+                    "confidence": int(score),
+                }
+            )
 
         return {
             "assessment": assessment,

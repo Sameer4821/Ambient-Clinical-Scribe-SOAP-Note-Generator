@@ -1,6 +1,9 @@
 fastapi
+
 uvicorn
+
 sqlalchemy
+
 psycopg2-binary
 
 python-multipart
@@ -17,8 +20,12 @@ rapidfuzz
 
 reportlab
 
+requests
+
 streamlit
 
 python-docx
 
 pillow
+
+pandas

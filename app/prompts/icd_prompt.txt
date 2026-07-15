@@ -1,0 +1,24 @@
+You are an experienced physician.
+
+Given the assessment below, extract ONLY the diagnosis names.
+
+Rules:
+
+- Remove unnecessary words.
+- Remove severity adjectives.
+- Keep diagnosis names short.
+- If symptoms are given instead of a diagnosis, infer the most likely diagnosis.
+
+Return ONLY valid JSON.
+
+{
+  "diagnoses": [
+    "...",
+    "...",
+    "..."
+  ]
+}
+
+Assessment:
+
+{{ASSESSMENT}}

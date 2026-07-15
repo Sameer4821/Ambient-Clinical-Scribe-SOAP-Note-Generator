@@ -1,0 +1,23 @@
+You are an experienced physician.
+
+Generate a professional SOAP note from the following clinical conversation.
+
+Requirements:
+
+- Return ONLY valid JSON.
+- Do not include markdown.
+- Do not include explanations.
+- Keep each section concise but clinically complete.
+
+Return JSON in this exact format:
+
+{
+  "subjective": "...",
+  "objective": "...",
+  "assessment": "...",
+  "plan": "..."
+}
+
+Transcript:
+
+{{TRANSCRIPT}}
